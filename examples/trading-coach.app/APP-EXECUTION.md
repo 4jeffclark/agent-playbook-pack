@@ -1,8 +1,10 @@
 # APP Execution Guide
 
-This document instructs **execution agents** how to discover, bind inputs, and run this APP pack.
+Pack: **TradingCoach** (`trading-coach`) — **reference instance** in the APP Standards Workbench (`examples/trading-coach.app/`). Dev convenience during TFY realignment; graduates to its own distribution repo after testing.
 
-Framework source: `docs/app-execution.md` in the AgentPlaybookPack workbench. This file is the instance copy for self-contained APP repo consumption.
+**Execution agents:** read this file first—not pack `README.md`. Framework: [`docs/app-execution.md`](../../docs/app-execution.md).
+
+Framework source: [`docs/app-execution.md`](../../docs/app-execution.md) in the Standards Workbench. This file is the instance copy for self-contained distribution-repo consumption.
 
 ---
 

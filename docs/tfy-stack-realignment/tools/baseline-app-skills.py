@@ -6,7 +6,7 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[1]
+REPO_ROOT = Path(__file__).resolve().parents[3]
 DEFAULT_PACK = REPO_ROOT / "examples" / "trading-coach.app"
 SKILLS_ROOT_NAME = "layer1-skills"
 

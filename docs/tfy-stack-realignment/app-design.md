@@ -26,7 +26,7 @@ Baseline strategic intent lives in `teamfoundry-stack-realignment-vision.md`. Ac
 During realignment, use these as the general APP framework references:
 
 - `docs/framework.md`
-- `docs/agent-skills-integration.md`
+- `docs/app-skills.md`
 - `docs/naming.md`
 - `schema/app-manifest-v0.1.md`
 - `examples/trading-coach.app/`
@@ -59,9 +59,9 @@ trading-coach.app/     # self-contained APP instance
 other-pack.app/        # additional instances when present
 ```
 
-No other files or folders belong at the repo root. The repo `README.md` indexes each `*.app/` pack (name, intent, version pointer).
+No other files or folders belong at the distribution repo root. The repo `README.md` indexes each `*.app/` pack (name, intent, version pointer).
 
-During POC, `agent-playbook-pack/examples/` models this distribution repo shape. The framework workbench (`docs/`, `schema/`, `tools/`) lives outside that root.
+The **standards workbench** (`agent-playbook-pack`) holds framework docs, schema, and reference instances under `examples/`. Those instances document the APP format standard—they are **not** a distribution repo layout. `examples/trading-coach.app/` is a dev convenience during TFY realignment and graduates to its own distribution repo after initial testing.
 
 ### APP Instance Layout
 
@@ -301,7 +301,18 @@ Playbook-specific overlays live under `layer3-playbooks/<playbook-id>/overlays/`
 
 Canonical layout is fixed by convention; `pack.app.yaml` lists playbook ids only (no `paths:` block).
 
-Example **distribution repo**:
+Example **standards workbench reference** (this repo — not a distribution layout):
+
+```text
+agent-playbook-pack/
+  docs/
+  schema/
+  examples/
+    hello-world.app/
+    trading-coach.app/    # dev convenience; graduates to own distribution repo
+```
+
+Example **published distribution repo** (separate product repo):
 
 ```text
 README.md
@@ -444,7 +455,7 @@ See `tfy-design.md` for ingestion, assembly, translation, and simulator design.
 | --- | --- |
 | **Execution agent guide** | `docs/app-execution.md` |
 | General APP framework docs | `docs/framework.md` |
-| Agent Skills integration | `docs/agent-skills-integration.md` |
+| Agent Skills integration | `docs/app-skills.md` |
 | Draft manifest schema | `schema/app-manifest-v0.1.md` |
 | APP examples | `examples/` |
 | Realignment plan and decisions | `teamfoundry-stack-realignment-plan.md` |

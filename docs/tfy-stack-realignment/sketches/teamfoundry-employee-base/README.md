@@ -445,7 +445,7 @@ APP declares behavior intent. TFY resolves placeholders, binds handbook and iden
 
 ## Illustrative Translation Targets
 
-Design-time mapping from APP elements to OpenClaw preview targets. See `tools/tfy-simulator/` and **Pilot Materialization Status** in the plan for preview artifacts.
+Design-time mapping from APP elements to OpenClaw preview targets. See [`../../tools/tfy-simulator/`](../../tools/tfy-simulator/) and **High-Level Status** in the plan for preview artifacts.
 
 | APP element | OpenClaw preview target |
 | --- | --- |

@@ -1,0 +1,23 @@
+appVersion: '0.1'
+kind: pack
+packId: hello-world
+name: Hello World
+version: '1.0.0'
+description: Minimal APP instance exercising all framework shapes and execution concepts.
+license: MIT
+compatibility:
+  agentSkills: '>=1.0'
+  runtimes:
+    - cursor
+inputs:
+  userDatastore:
+    type: datastore
+    required: true
+    description: User-controlled storage per contracts/user-datastore-layout.md
+    layoutContract: contracts/user-datastore-layout.md
+  agentWorkspace:
+    type: workspace
+    required: true
+    description: Agent-controlled temp and intermediate execution artifacts
+playbooks:
+  - hello-world

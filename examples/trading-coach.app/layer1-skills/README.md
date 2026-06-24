@@ -17,7 +17,7 @@ assets/tc-lib/         # shared Python helpers (pack instance)
 
 Every skill includes `scripts/run.py`. See [`docs/app-skills.md`](../../../docs/app-skills.md).
 
-Regenerate after skill logic changes: `python tools/materialize-skill-scripts.py` (workbench).
+Regenerate after skill logic changes: `python docs/tfy-stack-realignment/tools/materialize-skill-scripts.py` (Standards Workbench).
 
 ## Portfolio domain
 

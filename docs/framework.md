@@ -1,5 +1,7 @@
 # APP Framework Baseline
 
+APP concepts and layer model. Repo entry: [`../README.md`](../README.md). Format reference: [`../examples/hello-world.app/`](../examples/hello-world.app/).
+
 ## Working Name
 
 AgentPlaybookPack, abbreviated APP.

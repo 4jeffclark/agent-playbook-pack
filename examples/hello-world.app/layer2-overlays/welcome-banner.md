@@ -1,0 +1,27 @@
+# Overlay — welcome-banner
+
+## Overlay Kind
+
+`presentation`
+
+## Layer
+
+2 — pack-level (`layer2-overlays/`)
+
+## Purpose
+
+Add a short welcome banner above the core greeting when `banner: true`.
+
+## Content
+
+Insert a **Welcome banner** section at the top of `Report.md`:
+
+```markdown
+## Welcome banner
+
+Welcome to the Hello World APP — a minimal end-to-end validation pack.
+```
+
+## Uses
+
+No additional skills. Agent-authored presentation text only.

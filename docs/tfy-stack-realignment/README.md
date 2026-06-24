@@ -1,8 +1,22 @@
 # TeamFoundry Stack Realignment
 
-This folder contains documentation for the temporary APP and TeamFoundry stack realignment program.
+**Program documentation — not APP format.** APP standard: repo root [`README.md`](../../README.md).
 
-For current phase, priorities, pilot status, and decisions, read `teamfoundry-stack-realignment-plan.md`. That plan document is the only place program status should be tracked or updated.
+This folder documents the temporary TeamFoundry stack realignment program hosted in the APP Standards Workbench.
+
+## Program layout
+
+```text
+docs/tfy-stack-realignment/
+  teamfoundry-stack-realignment-plan.md   ← status and decisions
+  app-design.md / tfy-design.md           ← current design
+  sketches/                               ← deferred pilot designs (WIP)
+  tools/                                  ← migration scripts, simulator (WIP)
+```
+
+APP format standard: repo-root [`docs/`](../) (except this folder), [`schema/`](../../schema/), [`examples/`](../../examples/).
+
+For current phase, priorities, pilot status, and decisions, read `teamfoundry-stack-realignment-plan.md`.
 
 ## Read Order
 
@@ -56,23 +70,22 @@ Use these entry points when reading `teamfoundry.ai`:
 | --- | --- |
 | `docs/app-execution.md` | Execution agent guide (framework baseline) |
 | `docs/framework.md` | Core APP concepts and layer model |
-| `docs/agent-skills-integration.md` | Agent Skills compatibility |
+| `docs/app-skills.md` | Agent Skills standard and playbook composition |
 | `docs/naming.md` | APP naming and ASP pivot context |
 | `schema/app-manifest-v0.1.md` | Draft manifest shape |
-| `examples/` | APP distribution repo root (POC); `trading-coach.app/` |
-| `examples/trading-coach.app/` | TradingCoach APP instance (full legacy translation) |
-| `sketches/teamfoundry-employee-base/` | Deferred TFY pilot design sketch |
+| `examples/` | Reference `{packId}.app/` instances documenting the APP format (not a distribution repo) |
+| `examples/hello-world.app/` | Minimal format reference (all APP shapes) |
+| `examples/trading-coach.app/` | Domain reference instance; dev convenience — graduates to own distribution repo |
 
-Example READMEs describe pack intent and design. They are not status trackers. Check the plan document for what exists on disk and what to do next.
+Program-only material (not APP format standard):
 
-## Implementation Artifact Locations
-
-| Artifact | Location |
+| Path | Use for |
 | --- | --- |
-| TFY-derived APP examples | `examples/` |
-| Local TFY simulator | `tools/tfy-simulator/` |
-| Simulator preview output | `tools/tfy-simulator/output/` |
-| Stable APP framework docs | `docs/`, `schema/`, `examples/` after graduation from design docs |
+| `sketches/teamfoundry-employee-base/` | Deferred TFY pilot design sketch |
+| `tools/tfy-simulator/` | Local TFY simulator harness |
+| `tools/migrate-trading-coach.py` | Regenerate `examples/trading-coach.app/` from legacy source |
+
+Paths above are relative to this folder (`docs/tfy-stack-realignment/`).
 
 ## How To Use This Folder
 

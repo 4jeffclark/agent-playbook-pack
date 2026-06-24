@@ -2,7 +2,7 @@
 
 Local development harness for previewing how TeamFoundry would ingest an APP pack, assemble assistant context, and translate the result into target engine deployable artifacts.
 
-Design: `docs/tfy-stack-realignment/tfy-design.md`
+Design: [`../tfy-design.md`](../tfy-design.md)
 
 ## Status
 
@@ -11,7 +11,7 @@ Not implemented yet. This directory is reserved for the simulator scaffold and p
 ## First Preview Target
 
 ```text
-Pack: examples/teamfoundry-employee-base/pack.app.yaml
+Pack: sketches/teamfoundry-employee-base/pack.app.yaml
 Playbook: daily-backup
 Engine profile: openclaw
 ```
@@ -40,10 +40,10 @@ Input:
   engine profile (default: openclaw)
 
 Output:
-  tools/tfy-simulator/output/assistant-construction-plan.md
-  tools/tfy-simulator/output/translation-manifest.json
-  tools/tfy-simulator/output/engine-preview/
-  tools/tfy-simulator/output/warnings.txt
+  output/assistant-construction-plan.md
+  output/translation-manifest.json
+  output/engine-preview/
+  output/warnings.txt
 ```
 
 ## Rules

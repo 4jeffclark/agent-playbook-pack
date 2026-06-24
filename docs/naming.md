@@ -1,5 +1,7 @@
 # Naming Notes
 
+`{packId}.app/` and distribution repo naming. Repo entry: [`../README.md`](../README.md).
+
 ## Current Candidate
 
 AgentPlaybookPack, abbreviated APP.

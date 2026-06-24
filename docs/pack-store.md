@@ -1,6 +1,6 @@
 # Future Pack Store
 
-Store design home in this repo: [`../store/README.md`](../store/README.md).
+Draft design notes for a possible Pack Store layer. Not part of the current standards workbench layout.
 
 ## Purpose
 

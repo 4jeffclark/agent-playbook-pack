@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """One-shot migration: legacy TradingCoach (ASP) -> APP trading-coach.app instance.
 
-Reads C:\\code\\trading-coach (read-only). Writes examples/ as APP distribution repo root.
+Reads C:\\code\\trading-coach (read-only). Writes examples/trading-coach.app/ as a reference instance in the standards workbench.
 """
 
 from __future__ import annotations
@@ -15,7 +15,7 @@ from pathlib import Path
 import yaml
 
 LEGACY = Path(r"C:\code\trading-coach")
-REPO_ROOT = Path(__file__).resolve().parents[1]
+REPO_ROOT = Path(__file__).resolve().parents[3]
 WORKBENCH = REPO_ROOT
 DIST_ROOT = REPO_ROOT / "examples"
 PACK_ROOT = DIST_ROOT / "trading-coach.app"
@@ -403,25 +403,19 @@ def write_app_execution() -> None:
     (PACK_ROOT / "APP-EXECUTION.md").write_text(header + body + appendix, encoding="utf-8")
 
 
-def write_distribution_readme() -> None:
+def write_examples_readme() -> None:
     text = (
-        "# TradingCoach APP Distribution Repo\n\n"
-        "APP distribution repo root (workbench path: `examples/`). "
-        "Contains indexed APP instances only.\n\n"
-        "## Packs\n\n"
-        "| Pack | Path | Description |\n"
-        "| --- | --- | --- |\n"
-        "| TradingCoach | [trading-coach.app/](trading-coach.app/) | "
-        "Portfolio analysis and trading performance review playbooks |\n\n"
-        "## Execution\n\n"
-        "```yaml\n"
-        "appRepo: <path-to-this-repo>\n"
-        "directive:\n"
-        "  pack: trading-coach\n"
-        "  playbook: aggregate-state-review\n"
-        "inputs:\n"
-        "  userDatastore: ~/TradingCoachData\n"
-        "```\n"
+        "# APP Reference Instances\n\n"
+        "Reference `{packId}.app/` instances that **document the APP format standard** "
+        "alongside [`docs/`](../docs/) and [`schema/`](../schema/).\n\n"
+        "This folder is **not** an APP distribution repo.\n\n"
+        "## Instances\n\n"
+        "| Instance | Role |\n"
+        "| --- | --- |\n"
+        "| [hello-world.app/](hello-world.app/) | Minimal reference — all APP shapes |\n"
+        "| [trading-coach.app/](trading-coach.app/) | Domain reference; dev convenience during "
+        "TFY realignment — graduates to own distribution repo |\n\n"
+        "Execution agents: open `{packId}.app/APP-EXECUTION.md` first.\n"
     )
     (DIST_ROOT / "README.md").write_text(text, encoding="utf-8")
 
@@ -458,7 +452,7 @@ def main() -> None:
     write_pack_manifest()
     write_app_execution()
     ensure_layer2_readme()
-    write_distribution_readme()
+    write_examples_readme()
     subprocess.run(
         [sys.executable, str(REPO_ROOT / "tools" / "baseline-app-skills.py")],
         check=True,

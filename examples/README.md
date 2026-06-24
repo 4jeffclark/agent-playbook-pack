@@ -1,24 +1,10 @@
-# TradingCoach APP Distribution Repo
+# APP Reference Instances
 
-APP distribution repo root (workbench path: `examples/`). Contains indexed APP instances only.
+Reference `{packId}.app/` folders documenting the APP format. Not a distribution repo.
 
-## Packs
+| Instance | Scope |
+| --- | --- |
+| [hello-world.app/](hello-world.app/) | Format reference — all shapes |
+| [trading-coach.app/](trading-coach.app/) | Domain reference; TFY dev convenience |
 
-| Pack | Path | Description |
-| --- | --- | --- |
-| TradingCoach | [trading-coach.app/](trading-coach.app/) | Portfolio analysis and trading performance review playbooks |
-
-## Execution
-
-Point the executor at this repo and pack `APP-EXECUTION.md`:
-
-```yaml
-appRepo: <path-to-this-repo>
-directive:
-  pack: trading-coach
-  playbook: aggregate-state-review
-inputs:
-  userDatastore: ~/TradingCoachData
-```
-
-See [trading-coach.app/APP-EXECUTION.md](trading-coach.app/APP-EXECUTION.md).
+Run a pack: read `{packId}.app/APP-EXECUTION.md`.

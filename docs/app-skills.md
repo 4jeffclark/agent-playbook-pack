@@ -1,8 +1,56 @@
 # APP Skills Baseline
 
-APP **layer1-skills** are [agentskills.io](https://agentskills.io/specification) Agent Skills. APP does not define an alternate skill format, execution mode, or scripting tier.
+`layer1-skills/` agentskills.io standard and playbook composition. Repo entry: [`../README.md`](../README.md).
 
-Playbooks reference skills by directory path. Skill behavior lives entirely in the skill directory.
+APP **layer1-skills** are [agentskills.io](https://agentskills.io/specification) Agent Skills. APP composes them into playbooks; it does not define an alternate skill format, execution mode, or scripting tier.
+
+Agent Skills answer: *How does an agent learn a specific capability?* APP answers: *How does a domain package compose capabilities into user-intent workflows?*
+
+Skill behavior lives in the skill directory. Playbooks reference skills via manifest `uses:` entries (see **Playbook composition** below).
+
+---
+
+## Playbook composition
+
+When a pack needs a reusable capability, prefer one of these forms:
+
+### Local skill (default)
+
+```yaml
+uses:
+  - skill: ../../layer1-skills/normalize-broker-csv
+```
+
+Directory shape below. `SKILL.md` is the source of truth for activation, procedure, and when to run bundled scripts.
+
+### External skill reference
+
+```yaml
+uses:
+  - skillRef:
+      type: git
+      uri: https://github.com/example/agent-skills.git
+      path: finance/normalize-broker-csv
+      version: v1.2.0
+```
+
+Reference types: `git`, `registry`, `url`, `local`. Security and trust are enforced by the runtime or Pack Store policy.
+
+### Literal skill definition
+
+For small pack-local procedures not yet worth a skill directory:
+
+```yaml
+uses:
+  - skillLiteral:
+      name: classify-position-intent
+      description: Classify a position note as trade, investment, hedge, or cash management.
+      instructions: |
+        Read the position note and assign one primary intent.
+        Return the intent and a short rationale.
+```
+
+Extract to a full `layer1-skills/<id>/` directory when the procedure grows.
 
 ---
 
@@ -130,13 +178,18 @@ Prefer `references/` over bloated `SKILL.md` bodies (> ~500 lines or > ~5000 tok
 
 ## Progressive disclosure
 
-Per agentskills.io:
+Per agentskills.io, within a skill directory:
 
 1. **Metadata** — `name` and `description` at catalog time
 2. **Instructions** — full `SKILL.md` when the skill activates
 3. **Resources** — `scripts/`, `references/`, `assets/` only when needed
 
-APP playbooks should activate only skills required for the resolved playbook and lenses.
+At playbook scope:
+
+1. Pack catalog loads minimal pack and playbook metadata
+2. Playbook activation loads the selected playbook manifest
+3. Only skills required for the resolved playbook and lenses activate
+4. Skill resources load only when `SKILL.md` instructs
 
 ---
 
@@ -166,10 +219,18 @@ Pack authors should keep `name` aligned with the directory name and descriptions
 
 ---
 
+## Open questions
+
+- Should APP define a lockfile for external skill references?
+- Should APP allow skill version ranges, or only pinned versions?
+- Should literal skills be allowed in published packs?
+- How should Pack Store trust metadata interact with Agent Skills licenses and `compatibility` fields?
+
+---
+
 ## Related docs
 
 | Doc | Role |
 | --- | --- |
-| [`agent-skills-integration.md`](agent-skills-integration.md) | How APP composes skills in playbooks |
 | [`app-execution.md`](app-execution.md) | How execution agents activate skills |
 | [`../schema/app-manifest-v0.1.md`](../schema/app-manifest-v0.1.md) | Playbook `uses:` skill references |

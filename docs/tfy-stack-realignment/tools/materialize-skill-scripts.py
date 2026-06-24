@@ -6,7 +6,7 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
-REPO = Path(__file__).resolve().parents[1]
+REPO = Path(__file__).resolve().parents[3]
 PACK = REPO / "examples" / "trading-coach.app"
 SKILLS = PACK / "layer1-skills"
 
