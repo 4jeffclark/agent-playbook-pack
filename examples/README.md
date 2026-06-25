@@ -1,10 +1,10 @@
 # APP Reference Instances
 
-Reference `{packId}.app/` folders documenting the APP format. Not a distribution repo.
+Reference `{packId}.app/` folders — side-by-side helpers for understanding [`../standard/app-authoring.md`](../standard/app-authoring.md).
 
 | Instance | Scope |
 | --- | --- |
-| [hello-world.app/](hello-world.app/) | Format reference — all shapes |
-| [trading-coach.app/](trading-coach.app/) | Domain reference; TFY dev convenience |
+| [hello-world.app/](hello-world.app/) | Minimal instance exercising standard layer shapes |
+| [trading-coach.app/](trading-coach.app/) | Domain reference — source-profile playbook |
 
-Run a pack: read `{packId}.app/APP-EXECUTION.md`.
+Instance entry: `pack.app.yaml`.

@@ -2,8 +2,8 @@ appVersion: '0.1'
 kind: pack
 packId: trading-coach
 name: TradingCoach
-version: 3.1.0
-description: Structured trading performance reviews and portfolio analysis playbooks.
+version: '1.0.0'
+description: Domain reference instance — source profile playbook for datastore inventory and quality review.
 license: TBD
 compatibility:
   agentSkills: '>=1.0'
@@ -18,12 +18,4 @@ inputs:
     required: true
     description: Agent-controlled temp and intermediate execution artifacts
 playbooks:
-  - aggregate-state-review
-  - environment-review
-  - unit-decision-review
-  - activity-period-review
   - source-profile
-sourceCorpus:
-  repository: trading-coach
-  readOnly: true
-  migratedFrom: AgenticSkillPack v3.1

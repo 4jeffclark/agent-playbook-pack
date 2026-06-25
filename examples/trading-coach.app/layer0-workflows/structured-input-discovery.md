@@ -10,24 +10,18 @@
 
 ## Purpose
 
-Parse playbook **Inputs** from natural language and attachments; present **Inputs Resolved**; reconcile pending parameters.
+Resolve playbook inputs from natural language before core execution.
 
 ## Procedure
 
-Follow **Structured Inputs Framework** in [PROJECT.md](../PROJECT.md):
+1. **Parse** — infer `evaluation`, `analysisPeriodStart`, and `analysisPeriodEnd` from the user request, attachments, and bound `{userDatastore}` context
+2. **Summarize** — present **Inputs Resolved** with each parameter marked `confirmed`, `default`, or `pending`
+3. **Reconcile** — ask plain-language questions only for pending or ambiguous parameters
+4. **Confirm** — finalize the input block before clearing the `inputs-resolved` gate (see playbook manifest)
 
-1. **Parse** — infer all declared Inputs from user request, attachments, repository context
-2. **Summarize** — present **Inputs Resolved** with every parameter (`confirmed`, `proposed default`, or `pending`)
-3. **Reconcile** — ask plain-language questions for pending/ambiguous parameters only
-4. **Confirm** — update summary after each reconciliation turn
-
-Users do not need fixed parameter syntax (e.g. `evaluation: false`).
+Users do not need fixed parameter syntax (for example `evaluation: false`).
 
 ## Outputs
 
-- Final **Inputs Resolved** block
-- Reconciliation transcript (embedded in report Appendix A when `evaluation: false`)
-
-## Manifest
-
-See [structured-input-discovery.asp.yaml](structured-input-discovery.asp.yaml)
+- Final **Inputs Resolved** block (embed in report Appendix)
+- Cleared `inputs-resolved` gate

@@ -31,7 +31,7 @@ python scripts/run.py --recipient "$RECIPIENT" --workspace "$AGENT_WORKSPACE"
 ## Outputs
 
 - `{agentWorkspace}/greeting.txt` — single-line greeting
-- `{agentWorkspace}/skill-result.json` — structured skill result for run manifest
+- `{agentWorkspace}/skill-result.json` — structured skill result (workspace intermediate)
 
 ## Used by
 

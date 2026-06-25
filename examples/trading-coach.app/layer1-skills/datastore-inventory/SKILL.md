@@ -1,12 +1,13 @@
 ---
 name: datastore-inventory
 compatibility: Requires Python 3.11+ when running bundled scripts
-description: TradingCoach skill: datastore-inventory
+description: Inventory and profile the bound user datastore for coverage, quality, and activity ranges. Use during source-profile playbook core output.
 metadata:
-  legacyCapabilityKind: retrieve
-  sourcePath: capabilities/datastore-inventory
-  sourceRepository: trading-coach
+  packId: trading-coach
+  layer: '1'
 ---
+
+## Procedure
 
 ### Step 1 — Inventory the datastore
 

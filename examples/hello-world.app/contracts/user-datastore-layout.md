@@ -4,7 +4,7 @@ Bind `userDatastore` to a host directory. Use this structure beneath it:
 
 ```text
 {userDatastore}/
-  runs/       # immutable run output folders (reports and run manifests)
+  runs/       # immutable run output folders (reports)
   inputs/     # optional user seed files (not required for hello-world)
 ```
 

@@ -1,17 +1,16 @@
 # Hello World
 
-Domain catalog for pack `hello-world`. Execution: [`APP-EXECUTION.md`](APP-EXECUTION.md).
+A minimal **AgentPlaybookPack** reference instance — every standard layer shape in one pack.
 
-## Playbooks
+Use this pack to validate APP format and execution plumbing. It produces a simple greeting report for a named recipient.
 
-| Playbook id | User intent | Example |
-| --- | --- | --- |
-| `hello-world` | Greeting | *Run hello world for Alice with a friendly sign-off.* |
+## Try it
 
-## Inputs
+- *Run hello world for Alice.*
+- *Run hello world for Bob with a friendly sign-off and welcome banner.*
 
-| Input | Default | Effect |
-| --- | --- | --- |
-| `recipient` | `World` | Name in the greeting |
-| `friendly` | `false` | Sign-off overlay |
-| `banner` | `false` | Welcome banner overlay |
+## About
+
+- **Version:** 1.0.0 (see [`pack.app.yaml`](pack.app.yaml))
+- **License:** MIT
+- Reference instance in the APP Standards Workbench (`examples/hello-world.app/`).

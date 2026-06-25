@@ -7,8 +7,6 @@ description: Minimal APP instance exercising all framework shapes and execution 
 license: MIT
 compatibility:
   agentSkills: '>=1.0'
-  runtimes:
-    - cursor
 inputs:
   userDatastore:
     type: datastore

@@ -1,12 +1,13 @@
 ---
 name: exit-interview
 compatibility: Requires Python 3.11+ when running bundled scripts
-description: TradingCoach skill: exit-interview
+description: Conduct exit interview questions for source-profile evaluation overlay; write ExitInterview.md.
 metadata:
-  legacyCapabilityKind: interact
-  sourcePath: capabilities/exit-interview
-  sourceRepository: trading-coach
+  packId: trading-coach
+  layer: '1'
 ---
+
+## Procedure
 
 1. Ask concise exit interview questions per playbook overlay
 2. Store responses in `ExitInterview.md`
@@ -33,4 +34,4 @@ Set `compatibility: Requires Python 3.11+` when the runtime must execute bundled
 
 ## Used by
 
-- Evaluation overlays
+- `layer3-playbooks/source-profile` (evaluation overlay)

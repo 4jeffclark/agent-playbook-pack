@@ -1,17 +1,17 @@
 ---
 name: source-profile-insights
 compatibility: Requires Python 3.11+ when running bundled scripts
-description: TradingCoach skill: source-profile-insights
+description: Synthesize datastore insights, scorecard, and treatment readiness for source-profile evaluation overlay.
 metadata:
-  legacyCapabilityKind: synthesize
-  sourcePath: capabilities/source-profile-insights
-  sourceRepository: trading-coach
+  packId: trading-coach
+  layer: '1'
 ---
+
+## Procedure
 
 1. Optional developer/trader reflection on coverage gaps and export practices (not trading coaching)
 2. Document most useful insights the datastore supports
 3. Scorecard on coverage, quality, and treatment readiness
-4. Exit interview when evaluation overlay active
 
 ## Scripts
 
