@@ -1,12 +1,11 @@
 # Documentation
 
-Workbench developer documentation — editorial content, program notes, and design history.
+Human-facing product documentation for the APP Standards Workbench. **Not** the APP execution standard.
 
-**Not for APP execution understanding.** For the normative APP standard, read [`../standard/app-authoring.md`](../standard/app-authoring.md). For reference pack instances, see [`../examples/`](../examples/).
-
-| Path | Purpose |
+| File | Purpose |
 | --- | --- |
-| [`framework.md`](framework.md) | APP concepts and layer model (editorial) |
-| [`naming.md`](naming.md) | Naming rationale and history |
-| [`pack-store.md`](pack-store.md) | Future Pack Store draft (not current standard) |
-| [`tfy-stack-realignment/`](tfy-stack-realignment/) | TeamFoundry stack realignment program |
+| [`app-workbench-guide.md`](app-workbench-guide.md) | Product context for users, contributors, and pack authors |
+
+Normative standard: [`../standard/`](../standard/). Reference instances: [`../examples/`](../examples/).
+
+Execution agents read [`../standard/app-authoring.md`](../standard/app-authoring.md), not this folder.

@@ -21,8 +21,6 @@ requires:
   - workflow: ../../layer0-workflows/structured-input-discovery
 uses:
   - skill: ../../layer1-skills/datastore-inventory
-  - skill: ../../layer1-skills/source-profile-insights
-  - skill: ../../layer1-skills/exit-interview
 overlays:
   - id: source-profile-evaluation
     path: overlays/source-profile-evaluation.md

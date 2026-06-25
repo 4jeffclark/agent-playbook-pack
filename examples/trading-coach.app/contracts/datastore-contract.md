@@ -6,9 +6,9 @@ TradingCoach is a prompt/spec/artifact factory. This contract is the source of t
 
 ## Purpose
 
-The datastore preserves all user-provided native E*TRADE exports and maintains normalized CSV tables that are easier for agents to inspect during treatment execution.
+The datastore preserves all user-provided native E*TRADE exports and maintains normalized CSV tables that are easier for agents to inspect during playbook execution.
 
-The repository is single-user. Unless a treatment explicitly narrows account scope or analysis period, all datastore content is relevant to future report requests.
+The repository is single-user. Unless a playbook explicitly narrows account scope or analysis period, all datastore content is relevant to future report requests.
 
 ## Folder Contract
 
@@ -284,7 +284,7 @@ ActivityRowCount
 SourceHistoryRows
 ```
 
-`NetCashActivityExcludingSweep` is the preferred daily cash reconstruction input unless a treatment specifically needs sweep mechanics. `NetCashActivityIncludingSweep` is preserved for audit and reconciliation.
+`NetCashActivityExcludingSweep` is the preferred daily cash reconstruction input unless an analysis specifically needs sweep mechanics. `NetCashActivityIncludingSweep` is preserved for audit and reconciliation.
 
 ### `cash_balance_estimated.csv`
 
@@ -428,58 +428,6 @@ Implementation hints:
 - Parse `DateAcquired` into `yyyy-MM-dd`.
 - Preserve `PositionRaw` exactly enough to audit parsing decisions.
 
-## Period Holdings Weight Reconstruction
-
-Treatments that report **portfolio weights at period boundaries** must derive them from the cumulative datastore, not only from a single latest export.
-
-### Data sources
-
-| Source | Role |
-|---|---|
-| `positions_lot_level.csv` | Observed holdings snapshots (`AsOfLocal`); multiple snapshots coexist |
-| `balances.csv` | Observed total live account value anchors (`AsOfLocal`) |
-| `orders.csv` | Filled orders to wind holdings between snapshots |
-| `ingestion_manifest.csv` | Enumerate available snapshot dates |
-
-### Target date algorithm
-
-For each boundary date `T` (period start EOD or period end EOD):
-
-1. **Observed snapshot (preferred):** Latest `AsOfLocal` in `positions_lot_level.csv` where date(`AsOfLocal`) ≤ `T`. Sum `MarketValue` by symbol (aggregate lots). Denominator: total live account value from latest `balances.csv` with date ≤ `T` (exclude "All Accounts" double-count per treatment rules).
-
-2. **Reconstructed backward:** If no observed snapshot ≤ `T`, take the **earliest** snapshot with date(`AsOfLocal`) > `T`. Initialize holdings from that snapshot. For each **filled** order in `orders.csv` with order date in (`T`, snapshot_date], **reverse** the fill (subtract buy quantity, add sell quantity per symbol/account). Revalue positions using fill price for changed lots; retain snapshot marks for unchanged residual where practical. Label `reconstructed_backward`; record anchor snapshot datetime in Appendix D.
-
-3. **Reconstructed forward:** If only snapshots < `T` exist, start from latest snapshot before `T` and forward-apply fills through `T`. Label `reconstructed_forward`.
-
-4. **Unavailable:** No snapshot within reasonable range and order history cannot bridge the gap (state why).
-
-### Weight aggregation
-
-After symbol-level holdings at `T` are estimated:
-
-1. Map each symbol through the active standards and rollup assignments (`HoldingsMap`, `ThemeMap`, `ThesisAssignment`, etc.).
-2. Sum market value by thesis/bucket/liquidity.
-3. Weight % = bucket MV ÷ total live account value at `T`.
-
-### Confidence and disclosure
-
-| Source label | Meaning |
-|---|---|
-| `observed_snapshot` | Direct holdings export on or before `T` |
-| `reconstructed_backward` | Wound back from a later snapshot through orders |
-| `reconstructed_forward` | Wound forward from an earlier snapshot through orders |
-| `unavailable` | Could not estimate with defensible method |
-
-Reports must:
-
-- Attempt reconstruction before declaring `unavailable`.
-- State anchor snapshot date(s) and order window used.
-- Treat reconstructed weights as **estimates** when fill-price marks differ from true EOD marks; note in Data Limitations.
-
-### Common mistake
-
-A post-period export (e.g. June holdings for a May analysis period) is **not** period-end weight. Either reconstruct May-end holdings from June snapshot + intervening orders, or label any June-only composition as a **reference snapshot** distinct from period-end weights.
-
 ### `ingestion_manifest.csv`
 
 ```text
@@ -544,7 +492,7 @@ Canonical rebuild is a full re-derivation, not an in-place patch. Derived tables
 - A newer orders export may contain **fewer rows** than an older export because E*TRADE order downloads can be rolling windows. Preserve rows that exist only in older raw files.
 - A newer account-history export for one account may contain **far fewer rows** than an older export for the same account. Preserve older-only activity rows.
 - Overlapping rows between exports are expected and must be deduplicated, not double-counted.
-- Point-in-time exports (`balances`, `portfolio_lot_level`) accumulate as historical snapshots. Treat the latest snapshot as current context unless a treatment explicitly compares snapshots.
+- Point-in-time exports (`balances`, `portfolio_lot_level`) accumulate as historical snapshots. Treat the latest snapshot as current context unless an analysis explicitly compares snapshots.
 - After rebuild, update `ingestion_manifest.csv` from all raw files and set `RebuiltAtLocal` to the rebuild time.
 
 ### Post-merge validation
@@ -561,7 +509,7 @@ State any validation failure, partial merge, or parser limitation explicitly bef
 
 ## Datastore-Aware Period Selection
 
-Before Entry Interview Question 1, agents must:
+Before structured input discovery, agents must:
 
 1. Inspect the current canonical datastore.
 2. Evaluate any newly supplied files.
@@ -570,44 +518,7 @@ Before Entry Interview Question 1, agents must:
 5. Validate the merged canonical datastore.
 6. Determine the combined available date range from canonical data.
 
-Entry Interview Question 1 must then ask whether the user wants to add more data, use the full available range, or select a subset.
-
-## Persistent Knowledge Layer
-
-Location: `{userDatastore}/data/knowledge/`
-
-Purpose: durable portfolio memory that is not fully derivable from broker raw inputs — confirmed holdings classifications, theme and thesis registries, policies, proxy sets, and promotion lineage.
-
-This tier is distinct from both raw and canonical data:
-
-- raw files are immutable source truth
-- canonical files are deterministic factual transforms
-- knowledge files are versioned, user-confirmed semantic state
-
-See `contracts/persistent-knowledge-model.md` for the full layout, schemas, and promotion rules.
-
-### Execution load path
-
-Before holdings, theme, or thesis confirmation capabilities run:
-
-1. Load current-state files from `{userDatastore}/data/knowledge/` as the starting baseline.
-2. Infer or reconcile only symbols missing from the baseline or flagged for review.
-3. On user confirmation, update `*Current.csv`, append to `*History.csv`, and record promotion in `{userDatastore}/data/knowledge/reports/KnowledgePromotions.csv`.
-
-Primary current-state files:
-
-| Domain | Path |
-|---|---|
-| Holdings map | `{userDatastore}/data/knowledge/holdings/HoldingsMapCurrent.csv` |
-| Liquidity intent | `{userDatastore}/data/knowledge/holdings/LiquidityIntentCurrent.csv` |
-| Theme registry | `{userDatastore}/data/knowledge/themes/ThemeRegistry.csv` |
-| Theme assignments | `{userDatastore}/data/knowledge/themes/ThemeMapCurrent.csv` |
-| Thesis registry | `{userDatastore}/data/knowledge/theses/ThesisRegistry.csv` |
-| Thesis assignments | `{userDatastore}/data/knowledge/theses/ThesisAssignmentCurrent.csv` |
-
-Report folders remain execution-local archives. Confirmed knowledge is promoted into `{userDatastore}/data/knowledge/`; it is not automatically overwritten on each run.
-
-Baseline reference: `reference/holdings-map-baseline.md`.
+Structured input discovery must then ask whether the user wants to add more data, use the full available range, or select a subset.
 
 ## Legacy Entry Limitation
 

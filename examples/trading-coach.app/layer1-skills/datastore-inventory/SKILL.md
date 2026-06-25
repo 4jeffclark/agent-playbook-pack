@@ -43,6 +43,10 @@ python scripts/run.py --datastore "$USER_DATASTORE" --workspace "$AGENT_WORKSPAC
 
 Set `compatibility: Requires Python 3.11+` when the runtime must execute bundled scripts.
 
+## References
+
+None.
+
 ## Outputs
 
 - `DataStoreInventory.csv`, `AccountCoverage.csv`, `Metrics.csv`

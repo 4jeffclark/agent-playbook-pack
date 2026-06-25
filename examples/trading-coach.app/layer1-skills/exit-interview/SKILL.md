@@ -28,10 +28,14 @@ python scripts/run.py --datastore "$USER_DATASTORE" --workspace "$AGENT_WORKSPAC
 
 Set `compatibility: Requires Python 3.11+` when the runtime must execute bundled scripts.
 
+## References
+
+None.
+
 ## Outputs
 
 - `ExitInterview.md`
 
 ## Used by
 
-- `layer3-playbooks/source-profile` (evaluation overlay)
+- `layer3-playbooks/source-profile` (evaluation overlay only)

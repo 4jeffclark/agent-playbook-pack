@@ -41,5 +41,5 @@ gates:
 outputs:
   primary:
     type: report
-    pathTemplate: '{userDatastore}/runs/{timestamp}-HelloWorld/Report.md'
+    pathTemplate: '{userDatastore}/reports/{timestamp}-HelloWorld/Report.md'
     contract: contracts/output-artifact-contract.md

@@ -1,9 +1,9 @@
 # Hello World Output Artifacts
 
-## Run folder pattern
+## Report folder pattern
 
 ```text
-{userDatastore}/runs/<GenerationTimestamp>-HelloWorld/
+{userDatastore}/reports/<GenerationTimestamp>-HelloWorld/
 ```
 
 | Token | Format |
@@ -14,7 +14,7 @@
 Example:
 
 ```text
-{userDatastore}/runs/20260623-143052-HelloWorld/
+{userDatastore}/reports/20260623-143052-HelloWorld/
 ```
 
 ## Required artifacts

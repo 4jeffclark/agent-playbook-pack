@@ -11,6 +11,5 @@ Domain reference instance — **source profile** playbook for E*TRADE datastore 
 
 - **Version:** 1.0.0 (see [`pack.app.yaml`](pack.app.yaml))
 - Reference instance in the APP Standards Workbench (`examples/trading-coach.app/`)
-- Graduates to its own distribution repo after TFY realignment testing
 
 Persistent data and reports belong under the bound `{userDatastore}` (see `contracts/user-datastore-layout.md`), not in this behavior repo.

@@ -101,7 +101,9 @@ The executing agent mediates omitted inputs: `userDatastore`, `agentWorkspace`, 
 
 ## Pack manifest
 
-File: `pack.app.yaml`
+File: `pack.app.yaml` (YAML on disk)
+
+Machine contract: [`pack.manifest.schema.json`](pack.manifest.schema.json)
 
 ```yaml
 appVersion: "0.1"
@@ -136,7 +138,9 @@ Canonical layout is convention. Omit path roots when using the standard tree.
 
 ## Playbook manifest
 
-File: `layer3-playbooks/<id>/playbook.app.yaml`
+File: `layer3-playbooks/<id>/playbook.app.yaml` (YAML on disk)
+
+Machine contract: [`playbook.manifest.schema.json`](playbook.manifest.schema.json)
 
 ```yaml
 appVersion: "0.1"
@@ -155,6 +159,11 @@ inputs:
   friendly:
     type: boolean
     default: false
+    description: Include friendly sign-off overlay
+  banner:
+    type: boolean
+    default: false
+    description: Include pack-level welcome banner overlay
 
 requires:
   - workflow: ../../layer0-workflows/input-discovery
@@ -167,6 +176,10 @@ overlays:
     path: ../../layer2-overlays/welcome-banner.md
     kind: presentation
     when: banner == true
+  - id: friendly-sign-off
+    path: overlays/friendly-sign-off.md
+    kind: enrichment
+    when: friendly == true
 
 gates:
   - id: inputs-resolved
@@ -179,7 +192,7 @@ gates:
 outputs:
   primary:
     type: report
-    pathTemplate: "{userDatastore}/runs/{timestamp}-HelloWorld/Report.md"
+    pathTemplate: "{userDatastore}/reports/{timestamp}-HelloWorld/Report.md"
     contract: contracts/output-artifact-contract.md
 ```
 
@@ -300,16 +313,33 @@ Markdown under `contracts/`. Referenced from manifests and layer artifacts.
 
 Contracts define durable data layout, artifact shape, persistence rules, and naming conventions relative to `{userDatastore}` and `{agentWorkspace}`.
 
+Primary report outputs use timestamped folders under `{userDatastore}/reports/` unless a contract specifies otherwise.
+
 ---
 
 ## Manifest kinds
 
-| Kind | File |
-| --- | --- |
-| `pack` | `pack.app.yaml` |
-| `playbook` | `playbook.app.yaml` |
+| Kind | File | Schema |
+| --- | --- | --- |
+| `pack` | `pack.app.yaml` | [`pack.manifest.schema.json`](pack.manifest.schema.json) |
+| `playbook` | `playbook.app.yaml` | [`playbook.manifest.schema.json`](playbook.manifest.schema.json) |
 
 APP does not use a `skill` manifest kind. Skills use agentskills.io `SKILL.md`.
+
+### Manifest format and validation
+
+- **On-disk format:** YAML (`pack.app.yaml`, `playbook.app.yaml`).
+- **Schema format:** JSON Schema in this folder (industry-standard machine contract).
+- **Validation:** Parse YAML to a JSON data model, then validate against the schema.
+
+```bash
+pip install pyyaml jsonschema
+python standard/validate-manifests.py
+```
+
+Validate specific files by passing paths. With no arguments, validates all manifests under `examples/`.
+
+JSON may be used at tool or API boundaries later; YAML remains the canonical format in distribution repos and examples.
 
 ---
 

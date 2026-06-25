@@ -32,7 +32,7 @@ Example:
 | `AccountCoverage.csv` | Account coverage profile |
 | `Metrics.csv` | Summary metrics |
 
-When `evaluation: true`, also include evaluation artifacts per the overlay and skill outputs (`Interview.md` or equivalent).
+When `evaluation: true`, also include evaluation artifacts per the overlay and skill outputs (`ExitInterview.md`, `SourceProfileScorecard.md`).
 
 ## Report.md
 

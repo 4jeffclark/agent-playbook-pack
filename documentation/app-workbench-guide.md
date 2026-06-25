@@ -1,0 +1,162 @@
+# APP Workbench Guide
+
+Human-facing guide for users, contributors, and pack authors. **Not** the APP execution standard.
+
+| Need | Read |
+| --- | --- |
+| Author or validate pack structure | [`../standard/app-authoring.md`](../standard/app-authoring.md) and JSON Schemas in [`../standard/`](../standard/) |
+| See working instances | [`../examples/`](../examples/) |
+| Workbench map | [`../README.md`](../README.md) |
+
+Execution agents learn APP from [`../standard/app-authoring.md`](../standard/app-authoring.md), then consume pack instances under [`../examples/`](../examples/) or a distribution repo. This document does not define runtime bootstrap or engine integration.
+
+---
+
+## What APP is
+
+**AgentPlaybookPack** (APP) is a portable, runtime-neutral format for domain workflows that agents discover and execute.
+
+A pack describes:
+
+- User intents (playbooks)
+- Inputs to resolve
+- Skills, workflows, overlays, and contracts to compose
+- Primary outputs to produce
+
+APP is **fire-and-forget**: it supplies behavioral instructions for execution agents. It has no ongoing involvement after primary outputs are written. Execution tracking is out of scope.
+
+APP is not a replacement for [Agent Skills](https://agentskills.io), MCP, a runtime orchestrator, or an application framework.
+
+---
+
+## Workbench layout
+
+This repository is the **APP Standards Workbench** — format definition and reference material. It is **not** an APP distribution repo.
+
+```text
+agent-playbook-pack/
+  README.md           workbench map
+  standard/           normative standard (authoring + JSON Schema)
+  examples/           reference pack instances
+  documentation/      this guide
+```
+
+| Folder | Role |
+| --- | --- |
+| [`standard/`](../standard/) | Authoritative standard. Manifests are YAML; validity is defined by JSON Schema. |
+| [`examples/`](../examples/) | Side-by-side reference instances. Must conform to `standard/`. |
+| [`documentation/`](../documentation/) | Product context for humans only. |
+
+When `standard/` and an example disagree, **update the example** to match the standard.
+
+---
+
+## Repository shapes
+
+**Distribution repo** (published product):
+
+```text
+my-product.app/
+  README.md              pack index (user welcome)
+  hello-world.app/
+  trading-coach.app/
+```
+
+Only `README.md` and `*.app/` folders at repo root.
+
+**Pack instance** (`{packId}.app/`):
+
+```text
+{packId}.app/
+  pack.app.yaml          entry manifest
+  README.md              user welcome (not execution authority)
+  layer0-workflows/
+  layer1-skills/
+  layer2-overlays/
+  layer3-playbooks/
+  contracts/
+```
+
+Same shape in `examples/` and in a distribution repo.
+
+---
+
+## Vocabulary
+
+| Term | Meaning |
+| --- | --- |
+| Pack | Domain package: playbooks, skills, workflows, overlays, contracts, manifests |
+| Playbook | User-intent workflow (layer 3) |
+| Skill | Granular capability — [agentskills.io](https://agentskills.io) directory under `layer1-skills/` |
+| Workflow | Shared lifecycle step — markdown under `layer0-workflows/` |
+| Overlay | Optional augmentation — pack-level (`layer2-overlays/`) or playbook-scoped (`layer3-playbooks/<id>/overlays/`) |
+| Contract | Durable data, artifact, or naming rule — markdown under `contracts/` |
+| Gate | Playbook precondition — declared on `playbook.app.yaml`; cleared by workflows |
+| `{userDatastore}` | User persistent data; bound at execution; never in APP repos |
+| `{agentWorkspace}` | Agent working area; bound at execution; never in APP repos |
+
+Layer numbering (0–3), manifest fields, and execution outcomes are defined in [`../standard/app-authoring.md`](../standard/app-authoring.md).
+
+---
+
+## Playbook modes
+
+| Mode | Outcome |
+| --- | --- |
+| Discovery | Answer what the pack can do |
+| Execution | Run a playbook after intent is clear |
+| Factory | Modify the pack itself |
+
+Keep discovery from triggering datastore reads or report generation.
+
+---
+
+## Core vs augmented output
+
+Every playbook defines **core output** that runs without optional overlays. Overlays add evaluation, enrichment, presentation, policy, or similar behavior when manifest conditions match.
+
+---
+
+## Naming
+
+| Item | Convention |
+| --- | --- |
+| Product name | AgentPlaybookPack; shorthand **APP** |
+| Pack folder | `{packId}.app/` (kebab-case `packId`) |
+| Pack manifest | `pack.app.yaml` |
+| Playbook manifest | `layer3-playbooks/<playbook-id>/playbook.app.yaml` |
+| Skill directory | `layer1-skills/<skill-id>/` matching `SKILL.md` frontmatter `name` |
+| Playbook / gate ids | kebab-case |
+
+---
+
+## Authoring a pack
+
+1. Read [`../standard/app-authoring.md`](../standard/app-authoring.md).
+2. Study [`../examples/hello-world.app/`](../examples/hello-world.app/) for minimal layer coverage.
+3. Create `{packId}.app/` with `pack.app.yaml` as entry.
+4. Add layer 0–3 artifacts and `contracts/`; reference them from manifests.
+5. Write pack `README.md` as user welcome content — examples and narrative, not a manifest duplicate.
+6. Validate manifests:
+
+```bash
+pip install -r standard/requirements.txt
+python standard/validate-manifests.py path/to/pack.app.yaml path/to/playbook.app.yaml
+```
+
+7. Publish as a distribution repo (`README.md` + `*.app/` only).
+
+---
+
+## Contributing to the workbench
+
+- Propose standard changes in [`../standard/app-authoring.md`](../standard/app-authoring.md) and JSON Schemas together.
+- Add or update reference instances under [`../examples/`](../examples/) to exercise standard features.
+- Run `python standard/validate-manifests.py` with no arguments to validate all example manifests.
+- Do not duplicate normative rules in this folder — keep product prose here, standard prose in `standard/`.
+
+---
+
+## Distribution (future)
+
+A Pack Store or registry is not part of the current standard. Distribution today is: a public git repo with `README.md` and one or more `{packId}.app/` folders.

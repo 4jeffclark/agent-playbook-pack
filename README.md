@@ -13,7 +13,7 @@ agent-playbook-pack/
   README.md           ← this file (workbench map)
   standard/           ← normative APP standard
   examples/           ← reference pack instances
-  documentation/      ← developer docs and TFY program (not APP standard)
+  documentation/      ← product guide for humans (not APP standard)
 ```
 
 ```text
@@ -41,14 +41,10 @@ my-product-app/                           pack.app.yaml
 | Path | Scope |
 | --- | --- |
 | [`README.md`](README.md) | Workbench identity, layout, vocabulary (this file) |
-| [`standard/app-authoring.md`](standard/app-authoring.md) | Authoritative APP standard |
+| [`standard/app-authoring.md`](standard/app-authoring.md) | Authoring standard — layout, layers, execution outcomes |
+| [`standard/pack.manifest.schema.json`](standard/pack.manifest.schema.json) | JSON Schema for `pack.app.yaml` |
+| [`standard/playbook.manifest.schema.json`](standard/playbook.manifest.schema.json) | JSON Schema for `playbook.app.yaml` |
 | [`standard/README.md`](standard/README.md) | Standard folder label |
 | [`examples/`](examples/) | Reference pack instances |
-| [`documentation/`](documentation/) | Workbench developer docs; not APP execution standard |
-| [`documentation/tfy-stack-realignment/`](documentation/tfy-stack-realignment/) | TeamFoundry program — not APP format |
-
----
-
-## TeamFoundry realignment
-
-Temporary program in [`documentation/tfy-stack-realignment/`](documentation/tfy-stack-realignment/). Status: [`teamfoundry-stack-realignment-plan.md`](documentation/tfy-stack-realignment/teamfoundry-stack-realignment-plan.md).
+| [`documentation/app-workbench-guide.md`](documentation/app-workbench-guide.md) | Workbench product guide for users, contributors, and authors |
+| [`documentation/README.md`](documentation/README.md) | Documentation folder index |
