@@ -1,11 +1,20 @@
 # Documentation
 
-Human-facing product documentation for the APP Standards Workbench. **Not** the APP execution standard.
+Human-facing product documentation. **Not** the APP execution standard.
+
+## Authoring path
 
 | File | Purpose |
 | --- | --- |
 | [`app-workbench-guide.md`](app-workbench-guide.md) | Product context for users, contributors, and pack authors |
 
-Normative standard: [`../standard/`](../standard/). Reference instances: [`../examples/`](../examples/).
+Normative standard: [`../standard/`](../standard/). Format reference: [`../examples/`](../examples/).
 
-Execution agents read [`../standard/app-authoring.md`](../standard/app-authoring.md), not this folder.
+Execution agents: workbench root [`README.md`](../README.md) → [`../standard/app-authoring.md`](../standard/app-authoring.md). Distribution repos for pack execution.
+
+## Other
+
+| Path | Purpose |
+| --- | --- |
+| [`validation/`](validation/) | Smoke-test and integration records |
+| [`archive/`](archive/) | Historical session exports (superseded designs) |
