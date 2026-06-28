@@ -16,4 +16,5 @@ Execution agents: workbench root [`README.md`](../README.md) → [`../standard/a
 
 | Path | Purpose |
 | --- | --- |
+| [`session-transcripts/README.md`](session-transcripts/README.md) | Session handover catalog — task index only; read transcript bodies only when directed |
 | [`dev-archive/`](dev-archive/) | Historical session exports and superseded material (not normative; excluded from Cursor indexing) |

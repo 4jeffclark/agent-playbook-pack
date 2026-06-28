@@ -1,0 +1,12 @@
+---
+description: Session handovers are opt-in task context only
+alwaysApply: true
+---
+
+# Session transcripts
+
+Do not read `documentation/session-transcripts/` unless the user names a specific file (path or @-mention).
+
+Transcripts are task handover material, not APP authority. Normative source is `standard/`. When a handover conflicts with `standard/` or the working tree, follow `standard/` and the tree.
+
+Do not browse, grep, or search this folder for background context.
