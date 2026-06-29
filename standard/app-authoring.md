@@ -6,6 +6,11 @@ APP is **fire-and-forget**: it supplies behavioral instructions for execution ag
 
 Pack `README.md` is lightweight user documentation. It is not authoritative for execution.
 
+| Audience | Document |
+| --- | --- |
+| Pack authors | This file |
+| Execution agents | [`app-execution.md`](app-execution.md) and [`post-run-checklist.md`](post-run-checklist.md) |
+
 ---
 
 ## Repo shapes
@@ -63,6 +68,9 @@ Given a pack instance address and a resolved playbook, execution must:
 4. Execute referenced skills per each skill's `SKILL.md`.
 5. Apply overlays when manifest conditions match.
 6. Write primary outputs per playbook manifest and referenced output contracts.
+7. Self-verify per [`post-run-checklist.md`](post-run-checklist.md).
+
+Operational detail: [`app-execution.md`](app-execution.md).
 
 Pack instances are consumed from **distribution repos** (`README.md` + `{packId}.app/` at repo root). See [Repo shapes](#repo-shapes).
 
@@ -88,6 +96,8 @@ Pack instances are consumed from **distribution repos** (`README.md` + `{packId}
 | Discovery | Answer what the pack can do; do not read datastore or write reports |
 | Execution | Run a playbook after user intent is clear |
 | Factory | Modify the pack itself |
+
+**Discovery → execution handoff:** Confirm target playbook, bindings, and resolved inputs before binding `{userDatastore}` or running workflows. Discovery must not write durable outputs. See [`app-execution.md`](app-execution.md#modes-and-handoff).
 
 ---
 
@@ -235,7 +245,24 @@ Extract to a full `layer1-skills/<id>/` directory when the procedure grows.
 
 Reference types for `skillRef`: `git`, `registry`, `url`, `local`.
 
-### Gates
+### Default resolution policies
+
+When the user does not specify a value (especially date ranges), execution agents need a declared policy — not an invented one. Playbooks may set `defaultResolution` at the manifest root:
+
+```yaml
+defaultResolution:
+  period: fullAvailableRange
+```
+
+| Policy | Meaning |
+| --- | --- |
+| `fullAvailableRange` | Use the widest range available in the bound datastore |
+| `latestCalendarMonth` | Use the most recent complete calendar month present in data |
+| `requireExplicit` | Do not infer; treat as pending unless manifest `default` applies |
+
+Omit `defaultResolution` when every input has an explicit manifest `default` and no period inference is needed (as in hello-world). Layer 0 input-discovery workflows should reference this block when reconciling period inputs.
+
+### Gates and evidence
 
 Workflows and skills **clear** gates by id; the playbook manifest **defines** them.
 
@@ -247,6 +274,16 @@ Workflows and skills **clear** gates by id; the playbook manifest **defines** th
 | `when` | No | Condition when the gate applies (omit when always required) |
 
 Procedural detail belongs in the workflow or contract that enforces the gate—not in YAML.
+
+**Workflow kinds and minimum evidence:**
+
+| Kind | Companion script | Minimum evidence to clear a gate |
+| --- | --- | --- |
+| Agent-only procedure | Not required | Procedure steps completed; gate id noted in run attestation |
+| Script-backed procedure | Required when Procedure says run script | Script outputs on disk per `SKILL.md` Outputs; or contract-defined artifact |
+| Domain validation (merge, layout) | Recommended when checks are machine-verifiable | Contract-defined artifact (e.g. validation summary, range manifest) |
+
+Execution agents self-attest gate clearance and complete [`post-run-checklist.md`](post-run-checklist.md) after outputs are written.
 
 ---
 
@@ -262,7 +299,7 @@ layer1-skills/<skill-id>/
   assets/           # optional
 ```
 
-When a pack ships bundled executables, include `scripts/run.py` and document it in the **Scripts** section of `SKILL.md`.
+When a pack ships bundled executables, include `scripts/run.py` and document it in the **Scripts** section of `SKILL.md`. Scripts must accept `--datastore` and `--workspace` as the canonical path interface. Document cross-platform invocation (Unix shell and PowerShell) or flag-only examples. See [`app-execution.md`](app-execution.md#script-invocation).
 
 ### `SKILL.md` frontmatter
 
@@ -271,7 +308,17 @@ When a pack ships bundled executables, include `scripts/run.py` and document it 
 | `name` | kebab-case; must match directory name |
 | `description` | what the skill does and when to use it |
 | `compatibility` | environment requirements when non-obvious |
+| `outputCompleteness` | optional — `complete` or `scaffold` (see below) |
 | `metadata` | string key-value pairs only |
+
+**`outputCompleteness`:**
+
+| Value | Meaning |
+| --- | --- |
+| `complete` | Script or procedure produces final artifact content |
+| `scaffold` | Script produces structure or indexes; agent fills narrative per Procedure |
+
+Omit when a bundled script produces all listed outputs (`complete` implied). Use `scaffold` when the agent must synthesize report sections from partial CSV or template output.
 
 ### `SKILL.md` body sections
 
@@ -332,6 +379,8 @@ python standard/validate-manifests.py
 ```
 
 Validate specific files by passing paths. With no arguments, validates all manifests under `examples/` and checks layout rules (overlay paths under `layer2-overlays/`, playbook index, forbidden legacy artifacts).
+
+**Execution agents do not run this validator** before executing a distribution pack. Authoring and CI only, unless a run request or pack README explicitly requires it.
 
 JSON may be used at tool or API boundaries later; YAML remains the canonical format in distribution repos and examples.
 

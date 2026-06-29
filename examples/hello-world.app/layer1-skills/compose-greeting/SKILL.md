@@ -2,6 +2,7 @@
 name: compose-greeting
 description: Compose the core Hello World greeting for a named recipient. Use during hello-world playbook core output phase.
 compatibility: Requires Python 3.11+ when running bundled scripts
+outputCompleteness: complete
 metadata:
   packId: hello-world
   layer: '1'
@@ -22,6 +23,10 @@ metadata:
 
 ```bash
 python scripts/run.py --recipient "$RECIPIENT" --workspace "$AGENT_WORKSPACE"
+```
+
+```powershell
+python scripts/run.py --recipient $env:RECIPIENT --workspace $env:AGENT_WORKSPACE
 ```
 
 ## References

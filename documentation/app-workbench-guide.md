@@ -5,10 +5,11 @@ Human-facing guide for users, contributors, and pack authors. **Not** the APP ex
 | Need | Read |
 | --- | --- |
 | Author or validate pack structure | [`../standard/app-authoring.md`](../standard/app-authoring.md) and JSON Schemas in [`../standard/`](../standard/) |
+| Execute a pack | [`../standard/app-execution.md`](../standard/app-execution.md) and [`../standard/post-run-checklist.md`](../standard/post-run-checklist.md) |
 | See working instances | [`../examples/`](../examples/) |
 | Workbench map | [`../README.md`](../README.md) |
 
-Execution agents learn APP from [`../standard/app-authoring.md`](../standard/app-authoring.md), then consume pack instances from a **distribution repo** (`README.md` + `{packId}.app/` at repo root). Reference instances under [`../examples/`](../examples/) illustrate the format only — they are not execution targets. This document does not define runtime bootstrap or engine integration.
+Execution agents learn APP from [`../standard/app-authoring.md`](../standard/app-authoring.md) and [`../standard/app-execution.md`](../standard/app-execution.md), then consume pack instances from a **distribution repo** (`README.md` + `{packId}.app/` at repo root). Reference instances under [`../examples/`](../examples/) illustrate the format only — they are not execution targets. This document does not define runtime bootstrap or engine integration.
 
 ---
 
@@ -43,7 +44,7 @@ agent-playbook-pack/
 
 | Folder | Role |
 | --- | --- |
-| [`standard/`](../standard/) | Authoritative standard. Manifests are YAML; validity is defined by JSON Schema. |
+| [`standard/`](../standard/) | Authoritative standard. Manifests are YAML; validity is defined by JSON Schema. Includes `app-authoring.md`, `app-execution.md`, and `post-run-checklist.md`. |
 | [`examples/`](../examples/) | Side-by-side reference instances (format study only; not execution targets). Must conform to `standard/`. |
 | [`documentation/`](../documentation/) | Product context for humans only. |
 

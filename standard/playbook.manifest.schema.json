@@ -43,6 +43,20 @@
       "type": "string",
       "pattern": "^[A-Z][A-Za-z0-9]*$"
     },
+    "defaultResolution": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "period": {
+          "type": "string",
+          "enum": [
+            "fullAvailableRange",
+            "latestCalendarMonth",
+            "requireExplicit"
+          ]
+        }
+      }
+    },
     "inputs": {
       "type": "object",
       "propertyNames": {

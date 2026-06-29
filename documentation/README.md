@@ -10,7 +10,7 @@ Human-facing product documentation. **Not** the APP execution standard.
 
 Normative standard: [`../standard/`](../standard/). Format reference: [`../examples/`](../examples/).
 
-Execution agents: workbench root [`README.md`](../README.md) → [`../standard/app-authoring.md`](../standard/app-authoring.md). Distribution repos for pack execution.
+Execution agents: [`../standard/app-authoring.md`](../standard/app-authoring.md) → [`../standard/app-execution.md`](../standard/app-execution.md). Distribution repos for pack execution.
 
 ## Other
 
